@@ -1,0 +1,37 @@
+
+    <div class="main">
+        <div class="Title">Rooms<span class="n">{{calcRoom}}</span></div>
+            <div class="search"><input type="text" id="a" #a (input)="search(a.value)" placeholder="search"/>
+                <div class="foundedRooms">
+                        <div class="foundedRoom" *ngFor="let room of rooms$ | async" routerLink="/room/{{room.id}}">
+                           {{room.title}}
+                        </div>
+                    </div>
+                </div>
+            
+        <div  class="rooms">
+            <div  class="room" *ngFor="let room of rooms">
+                <div class="delete" (click)="deleteRoom(room)">
+                    X
+                </div>
+                <div class="roomTitle" routerLink="/room/{{room.id}}">
+                    <h3>
+                        {{room.title}}
+                    </h3>
+                </div>
+                <div class="img" [ngStyle]="{'background': 'url(assets/img/rooms/' + room.img + ')', 'background-size': 'cover','background-position':'50% 50%'}" routerLink="/room/{{room.id}}">
+                    <div class="blur"></div>
+                </div>
+                <div class="stats" routerLink="/room/{{room.id}}">
+                    <div class="Temperature" [ngStyle]="{'background-image':'url(assets/img/ico/thermometer.png)','background-size':'50px 50px','background-repeat':'no-repeat','background-position':'50% 50%'}">
+                        {{room.temperature}}&#176;C
+                    </div>
+                    <div class="Air" [ngStyle]="{'background-image':'url(assets/img/ico/air.png)','background-size':'50px 50px','background-repeat':'no-repeat','background-position':'50% 50%'}">
+                            {{room.air}}%
+                    </div>
+                </div>
+            </div>
+            <div  class="addRoom" (click)="createRoom()">+</div>
+        </div>
+    </div>
+<app-modal-room *ngIf="modal" [type]="modalType"  (modal)="closeAdd($event)" (addedRoom)="addRoom($event)"></app-modal-room>

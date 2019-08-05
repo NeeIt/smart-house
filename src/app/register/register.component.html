@@ -1,0 +1,45 @@
+<div class="wrapper">
+        <div class="login" *ngIf="login==true">
+            <h2> Авторизация</h2>
+                <form class="loginBlock">
+                        <label>Контактный телефон<input type="text" name="phone" /></label>
+                        <label>Электронная почта<input type="email" name="email"/></label>
+                        <div  (click)="register()" class="descriptPass reg">Нет аккаунта?</div>
+                        <div class="buttonBlock" routerLink="/rooms">
+                                <button > Войти </button>
+                        </div>
+                </form>
+            </div>
+    <div class="registration" *ngIf="registration==true">
+        <div class="leftBlock">
+            <h3>Зарегестрироваться на нашем сервисе</h3>
+            <p class="step" [class.selectedP]="_step==1"><span class="pointIco" [class.selectedIco]="_step==1">1</span>Персональные данные</p>
+            <p class="step" [class.selectedP]="_step==2"><span class="pointIco" [class.selectedIco]="_step==2">2</span>Создание структуры</p>
+            <p class="step" [class.selectedP]="_step==3"><span class="pointIco" [class.selectedIco]="_step==3">3</span>Начало работы с сервисом</p>
+        </div>
+
+        <div class="rightBlock">
+            <div class="back" (click)="back()">X</div>
+                <form *ngIf="_step==1">
+                        <div>
+                            <label>Логин<input type="text" name="secondName"/></label>
+                        </div>
+                        <div >
+                            <label>Контактный телефон<input type="text" name="phone"/></label>
+                            <label>Электронная почта<input type="email" name="email"/></label>
+                        </div>
+                        <div class="pass">
+                                <label>Пароль<input type="password" name="pass"/></label>
+                                <label>Подтвердите пароль<input type="password" name="pass2"/></label>
+                        </div>  
+                        <div class="buttonBlock">
+                            <input type="submit" value="Далее"/>
+                        </div>
+                        <div *ngIf="_step==2">
+                            
+                        </div>
+                    </form>
+        </div>
+        
+    </div>
+</div>

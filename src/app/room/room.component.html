@@ -1,0 +1,46 @@
+
+    <div class="main">
+        <div class="imageOfRoom" [ngStyle]="{'background-image':'url(assets/img/rooms/'+room.img+')', 'background-size': 'cover','background-position':'50% 50%'}">
+            <div class="blur"></div>
+            <div class="rename" *ngIf="!renameNow" (click)="rename()">Переименовать</div>
+            <div class="title" *ngIf="!renameNow">{{room.title}}</div>
+            <form *ngIf="renameNow" class="renameForm" [formGroup]='renameForm' (ngSubmit)='updateRoom(renameForm.value)'>
+                <input type='text' formControlName='name'/>
+                <input type='submit' value="OK" />
+            </form>
+            <div class="stats">
+                    <div class="temp block">
+                        Температура: {{room.temperature}}&#176;C
+                    </div>
+                    <div class="air block">
+                        Влажность воздуха: {{room.air}}%
+                    </div>
+            </div>
+        </div>
+
+        <div class="devices">
+            <div class="device" *ngFor="let device of room.devices">
+                    <div class="delete" (click)="delete(device)">X</div>
+                    <div class="edit" (click)="editDev(device)"></div>
+                    <div class="deviceTitle">{{device.title}}</div>
+                <div class="ico" [ngStyle]="{'background-image':'url(assets/img/ico/'+device.ico+')', 'background-size': '100px 100px'}"></div>
+                <div class="valueRange">{{device.value || off}}</div>
+                <div class="value" *ngIf="device.type=='checkbox'">
+                        <div class="switch_box box_1">
+                                <input type="checkbox" class="switch_1" checked="{{(device.value=='on')?'checked':''}}" (change)="check(device)">
+                        </div>
+                </div>
+                <div class="value" *ngIf="device.type=='multi'">
+                    <div class="range">
+                        <div class="minmax">{{device.minValue || 0}}</div>
+                        <input type="range" min="{{device.minValue || 0}}" max="{{device.maxValue || 100}}" step="1" [(ngModel)]="device.value" (change)="save(device)" /> 
+                        <div class="minmax">{{device.maxValue || 100}}</div>
+                    </div>                      
+                </div>    
+            </div>
+            <div class="addDevice" (click)="createDev()">
+            +
+            </div>
+        </div>
+    </div>
+<app-modal *ngIf="modal" [type]="type" [takeDevice]="sendDevice" (addedDevice)="addDevice($event)" (creating)="closeAdd($event)" (editedDevice)="updateDevice($event)"></app-modal>

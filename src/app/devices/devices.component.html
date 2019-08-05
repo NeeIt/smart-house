@@ -1,0 +1,129 @@
+
+    <div class="devices">
+
+        <div class="search"><input type="text" placeholder="search" class="serc" #serc id="serc"
+                (input)="search(serc.value)"><input type="button" /></div>
+                
+        <div class="query" *ngIf="!term.trim()">
+            <div class="room" *ngFor="let room of rooms">
+                <div class="roomTitle">
+                    <div routerLink="/room/{{room.id}}">{{room.title}}</div>
+                    <div class="add" (click)="createDev(room)">+</div>
+                </div>
+                <div class="titles" *ngIf="room.devices.length>0">
+                    <div clas="ico">
+                        Icons
+                    </div>
+                    <div class="title">
+                        Title
+                    </div>
+                    <div class="value">
+                        Status
+                    </div>
+                    <div class="control">
+                        Control
+                    </div>
+                    <div class="buttons">
+                        Actions
+                    </div>
+                </div>
+                <div class="device" *ngFor="let device of room.devices">
+                    <div class="ico"
+                        [ngStyle]="{'background-image':'url(assets/img/ico/'+device.ico+')', 'background-size': '50px 50px'}">
+                    </div>
+                    <div class="title">
+                        {{device.title}}
+                    </div>
+                    <div class="value">
+                        {{device.value}}
+                    </div>
+                    <div class="control">
+                        <div class="value" *ngIf="device.type=='checkbox'">
+                            <div class="switch_box box_1">
+                                <input type="checkbox" class="switch_1" checked="{{(device.value=='on')?'checked':''}}"
+                                    (change)="check(device,room)">
+                            </div>
+                        </div>
+                        <div class="value" *ngIf="device.type=='multi'">
+                            <div class="range">
+                                <input type="range" min="{{device.minValue || 0}}" max="{{device.maxValue || 100}}"
+                                    step="1" [(ngModel)]="device.value" (change)="save(room)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="edit" (click)="editDev(room,device)">
+
+                        </div>
+                        <div class="delete" (click)="delete(room,device)">
+                            x
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="founded" *ngIf="term.trim()">
+            <div class="room">
+            <div class="titleFound">Найденные комнаты:</div>
+                <div class="foundedRoom" *ngFor="let room of rooms$ | async" routerLink="/room/{{room.id}}"> 
+                    <div class="roomName">{{room.title}}</div>
+                </div>
+                <div class="titleFound">Найденные Девайсы:</div>
+                <div class="titles" *ngIf="devices$.length>0">
+                        <div clas="ico">
+                            Icons
+                        </div>
+                        <div class="title">
+                            Title
+                        </div>
+                        <div class="value">
+                            Status
+                        </div>
+                        <div class="control">
+                            Control
+                        </div>
+                        <div class="buttons">
+                            Actions
+                        </div>
+                    </div>
+                <div class="device" *ngFor="let device of devices$">
+                      
+                    <div class="ico"
+                        [ngStyle]="{'background-image':'url(assets/img/ico/'+device.ico+')', 'background-size': '50px 50px'}">
+                    </div>
+                    <div class="title">
+                        {{device.title}}
+                    </div>
+                    <div class="value">
+                        {{device.value}}
+                    </div>
+                    <div class="control">
+                        <div class="value" *ngIf="device.type=='checkbox'">
+                            <div class="switch_box box_1">
+                                <input type="checkbox" class="switch_1" checked="{{(device.value=='on')?'checked':''}}"
+                                    (change)="check(device,room)">
+                            </div>
+                        </div>
+                        <div class="value" *ngIf="device.type=='multi'">
+                            <div class="range">
+                                <input type="range" min="{{device.minValue || 0}}" max="{{device.maxValue || 100}}"
+                                    step="1" [(ngModel)]="device.value" (change)="save(room)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="edit" (click)="editDev(room,device)">
+
+                        </div>
+                        <div class="delete" (click)="delete(room,device)">
+                            x
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <app-modal *ngIf="modal==true" [type]="type" [takeDevice]="sendDevice" (addedDevice)="addDevice($event)"
+        (creating)="closeAdd($event)" (editedDevice)="updateDevice($event)"></app-modal>

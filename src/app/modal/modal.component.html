@@ -1,0 +1,26 @@
+<div class="modalBg">
+        <div class="modalBlock">
+                <div class="close" (click)="onClose()">X</div>
+                <form [formGroup]="editForm" (ngSubmit)="editDevice(editForm.value)">
+                        <div class="icos">
+                                <div class="ico"
+                                        [ngStyle]="{'background-image':'url(assets/img/ico/'+ico+')','background-size':'100px 100px'}">
+                                </div>
+                                <label>Иконка<select formControlName="ico" (change)="setIco($event);">
+                                                <option *ngFor="let ico of icos" [value]="ico.src">{{ico.title}}
+                                                </option>
+                                        </select></label>
+                        </div>
+                        <label>Наименование: <input type="text" formControlName="title"></label>
+                        <label>Тип контроля<select formControlName="type">
+                                        <option value="checkbox">Переключатель</option>
+                                        <option value="multi">Регулятор</option>
+                                </select></label>
+                        <label>Минимальное значение: <input type="number" value=0 min="-100" max="99"
+                                        formControlName="minValue" /></label>
+                        <label>Максимальное значение: <input type="number" value=100 min="-99" max="100"
+                                        formControlName="maxValue" /></label>
+                        <input type="submit" value="Подтвердить " />
+                </form>
+        </div>
+</div>

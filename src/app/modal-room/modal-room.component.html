@@ -1,0 +1,10 @@
+
+<div class="modalBg">
+    <form class="modalBlock" *ngIf="type=='addRoom'" [formGroup]="addForm" (ngSubmit)="addRoom(addForm.value)">
+        <h2>Добавить комнату</h2>
+            <div class="close" (click)="onClose()">X</div>
+            <label>Название комнаты<input type="text" formControlName="title"/></label>
+            <label>Изображение<input type="text" formControlName="img" placeholder="Я хз, что с ним делать :P"/></label>
+            <input type="submit" value="Добавить" />
+    </form>
+</div>
